@@ -1,8 +1,8 @@
 /*
  * @Date: 2021-08-02 14:48:11
  * @LastEditors: xiongzeluo
- * @LastEditTime: 2022-04-13 12:16:53
- * @FilePath: /generationNovel/Users/luoxiongze/files/我的坚果云/代码库/duellinks-maybe-cards/webpack.config.js
+ * @LastEditTime: 2022-04-13 14:32:12
+ * @FilePath: /generationNovel/Users/luoxiongze/code/duellinks-maybe-cards/webpack.config.js
  */
 const webpack = require("webpack");
 const path = require('path');
@@ -28,6 +28,7 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    extensions: ['.jsx', '.js', '.ts', '.tsx'],
   },
   optimization: {
     splitChunks: {
@@ -91,18 +92,24 @@ module.exports = {
       {
         test: /\.(sass|scss)$/,
         use: [
-          'vue-style-loader',
           'css-loader',
           'sass-loader',
         ],
       },
       {
-        test: /\.less$/,
+        test: /\.(css|less)$/,
         use: [
-          'vue-style-loader',
-          'css-loader',
-          'less-loader'
-        ]
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|jpeg|gif|icon|webp)$/,
